@@ -1,0 +1,284 @@
+/* Variáveis CSS */
+:root {
+    --primary-color: #bd8722; /* Azul vibrante */
+    --secondary-color: #28a745; /* Verde para acertos */
+    --danger-color: #dc3545; /* Vermelho para erros */
+    --background-color: #f8f9fa; /* Fundo claro */
+    --text-color: #343a40; /* Texto escuro */
+    --card-background: #d8d2cb; /* Fundo de cartões */
+    --border-radius: 8px;
+    --box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    padding: 20px;
+}
+
+/* Cabeçalho */
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin-bottom: 5px;
+}
+
+/* Layout Principal */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr; /* Coluna única por padrão */
+}
+
+/* Estilo das Seções */
+section {
+    background-color: var(--card-background);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+section h2 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
+}
+
+/* Área do Jogo */
+#challenge-container {
+    text-align: center;
+}
+
+#image-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 20px;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#challenge-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* Efeito de desfoque inicial para aumentar a dificuldade */
+    filter: blur(10px); 
+    transition: filter 0.5s ease-in-out;
+}
+
+#image-container.revealed #challenge-image {
+    filter: blur(0); /* Remove o desfoque ao acertar */
+}
+
+/* Máscara CSS para simular recorte (opcional, pode ser feito via JS/Canvas) */
+#image-mask {
+    /* Exemplo de máscara: um círculo no centro */
+    /*
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.8) 70%);
+    mix-blend-mode: multiply;
+    */
+}
+
+/* Formulário de Palpite */
+#guess-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+#guess-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    flex-grow: 1;
+    max-width: 300px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #7d4813;
+}
+
+/* Área de Feedback */
+#feedback-area {
+    padding: 15px;
+    border-radius: var(--border-radius);
+    margin-top: 15px;
+    text-align: left;
+}
+
+#feedback-area h3 {
+    margin-bottom: 10px;
+}
+
+.correct {
+    background-color: #d4edda;
+    color: var(--secondary-color);
+    border: 1px solid #c3e6cb;
+}
+
+.incorrect {
+    background-color: #f8d7da;
+    color: var(--danger-color);
+    border: 1px solid #f5c6cb;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Tabela de Classificação */
+#leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+#leaderboard-table th, #leaderboard-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#leaderboard-table th {
+    background-color: #f2f2f2;
+    color: var(--text-color);
+}
+
+#leaderboard-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Galeria */
+#challenge-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.challenge-card {
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    text-align: center;
+    padding: 15px;
+    transition: transform 0.2s;
+}
+
+.challenge-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.challenge-card.completed {
+    border-left: 5px solid var(--secondary-color);
+}
+
+/* Formulário de Contribuição e Painel do Professor */
+#contribution-form, .panel-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+    align-items: center;
+}
+
+#contribution-form input[type="text"], #contribution-form select, #contribution-form input[type="file"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    flex-grow: 1;
+    min-width: 200px;
+}
+
+/* Rodapé */
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+    color: #6c757d;
+    font-size: 0.9em;
+}
+
+/* Responsividade */
+@media (min-width: 768px) {
+    main {
+        grid-template-columns: 2fr 1fr; /* Duas colunas em telas maiores */
+    }
+
+    #game-area {
+        grid-column: 1 / 2;
+    }
+
+    #leaderboard-area {
+        grid-column: 2 / 3;
+        grid-row: 1 / 3; /* Ocupa duas linhas */
+    }
+
+    #gallery-area {
+        grid-column: 1 / 2;
+    }
+
+    #contribution-form-area, #teacher-panel-area {
+        grid-column: 1 / 3; /* Ocupa a largura total */
+    }
+}
+
+@media (max-width: 767px) {
+    body {
+        padding: 10px;
+    }
+    
+    header {
+        padding: 15px;
+    }
+
+    #guess-form {
+        flex-direction: column;
+    }
+
+    #guess-input {
+        max-width: 100%;
+    }
+}
+
+/* #gallery-area{
+    background-color: #dc3545;
+} */

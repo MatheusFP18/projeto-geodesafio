@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoDesafio - Identificação de Lugares por Foto</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+
+    <header>
+        <h1>GeoDesafio: Onde Estou?</h1>
+        <p>Descubra os lugares icônicos de {city} e aprenda sobre sua história!</p>
+    </header>
+
+    <main>
+        <!-- Seção Principal do Jogo -->
+        <section id="game-area">
+            <h2>Desafio Atual</h2>
+            <div id="challenge-container">
+                <div id="image-container">
+                    <!-- A imagem do desafio será carregada aqui -->
+                    <img id="challenge-image" src="" alt="Desafio Geográfico">
+                    <div id="image-mask"></div> <!-- Máscara para simular dificuldade -->
+                </div>
+                <p id="challenge-description"></p>
+                
+                <form id="guess-form">
+                    <input type="text" id="guess-input" placeholder="Qual é este lugar?" required>
+                    <button type="submit">Palpitar</button>
+                </form>
+
+                <div id="feedback-area" class="hidden">
+                    <!-- Feedback de acerto/erro e conteúdo educativo -->
+                    <h3>Resultado: <span id="result-status"></span></h3>
+                    <p id="educational-text"></p>
+                    <p id="viacep-info"></p>
+                    <button id="next-challenge-btn">Próximo Desafio</button>
+                </div>
+
+                <div id="hint-area" class="hidden">
+                    <p>Dica: <span id="hint-text"></span></p>
+                    <button id="show-hint-btn">Mostrar Dica (-5 pontos)</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabela de Classificação Local (Gamificação) -->
+        <section id="leaderboard-area">
+            <h2>Tabela de Classificação</h2>
+            <table id="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>Posição</th>
+                        <th>Nome/Equipe</th>
+                        <th>Pontuação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dados da classificação serão inseridos aqui pelo JavaScript -->
+                </tbody>
+            </table>
+            <p class="small-text">A pontuação é salva localmente no seu navegador.</p>
+        </section>
+
+        <!-- Galeria de Desafios (Simulada) -->
+        <section id="gallery-area">
+            <h2>Galeria de Desafios ({escopo_mvp})</h2>
+            <div id="challenge-gallery">
+                <!-- Cartões dos desafios concluídos/disponíveis -->
+            </div>
+        </section>
+
+        <!-- Formulário de Contribuição (Simulado) -->
+        <section id="contribution-form-area">
+            <h2>Contribua com um Desafio (Simulado)</h2>
+            <p>Professores e colaboradores podem submeter novas fotos para o jogo. (Funcionalidade simulada no front-end)</p>
+            <form id="contribution-form">
+                <input type="text" placeholder="Título do Local" required>
+                <input type="text" placeholder="Descrição Curta" required>
+                <select required>
+                    <option value="">Dificuldade</option>
+                    <option value="Fácil">Fácil</option>
+                    <option value="Médio">Médio</option>
+                    <option value="Difícil">Difícil</option>
+                </select>
+                <input type="file" accept="image/*" required>
+                <input type="text" placeholder="CEP (Opcional)">
+                <button type="submit">Submeter Desafio (Simulado)</button>
+            </form>
+            <p id="contribution-feedback" class="hidden">Obrigado pela sua contribuição! Em um sistema real, ela seria enviada para moderação.</p>
+        </section>
+
+        <!-- Painel do Professor (Simulado) -->
+        <section id="teacher-panel-area">
+            <h2>Painel do Professor (Simulado)</h2>
+            <p>Gerencie eventos e desafios. (Funcionalidade simulada no front-end)</p>
+            <div class="panel-controls">
+                <p><strong>Próximo Evento {event_frequency}:</strong> Desafios de Arquitetura Moderna.</p>
+                <button id="toggle-event-btn">Ativar/Desativar Evento (Mock)</button>
+                <p id="event-status">Status: Desativado</p>
+            </div>
+            <div class="panel-controls">
+                <p><strong>Modo Equipes:</strong> {team_mode} (Máx. {max_players_per_team} por equipe)</p>
+                <button id="create-team-btn">Criar Equipe (Mock)</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 GeoDesafio. Um projeto educacional.</p>
+    </footer>
+</body>
+</html>
