@@ -2,10 +2,6 @@
 const CONFIG = {
     CITY: "Florianópolis",
     IMAGES_FOLDER: "assets/images/",
-    ESCOPO_MVP: "galeria local + jogo com pontuação + painel professor simulado",
-    EVENT_FREQUENCY: "mensal",
-    TEAM_MODE: true,
-    MAX_PLAYERS_PER_TEAM: 5,
     POINTS_EASY: 10,
     POINTS_MEDIUM: 20,
     POINTS_HARD: 40
@@ -22,10 +18,6 @@ const educationalText = document.getElementById('educational-text');
 const viacepInfo = document.getElementById('viacep-info');
 const nextChallengeBtn = document.getElementById('next-challenge-btn');
 const leaderboardBody = document.querySelector('#leaderboard-table tbody');
-const toggleEventBtn = document.getElementById('toggle-event-btn');
-const eventStatus = document.getElementById('event-status');
-const contributionForm = document.getElementById('contribution-form');
-const galleryAread = document.querySelector('#gallery-area');
 
 // Estado do Jogo
 let challenges = [];
@@ -73,15 +65,9 @@ function shuffleArray(array) {
  * Inicia o jogo, carrega o primeiro desafio e a pontuação.
  */
 function initializeGame() {
-    // Atualiza variáveis no HTML
     document.querySelector('header p').textContent = `Descubra os lugares icônicos de ${CONFIG.CITY} e aprenda sobre sua história!`;
-    document.querySelector('#gallery-area h2').textContent = `Galeria de Desafios (${CONFIG.ESCOPO_MVP})`;
-    document.querySelector('#teacher-panel-area .panel-controls p:last-child').textContent = `Modo Equipes: ${CONFIG.TEAM_MODE ? 'Ativo' : 'Inativo'} (Máx. ${CONFIG.MAX_PLAYERS_PER_TEAM} por equipe)`;
-    document.querySelector('#teacher-panel-area .panel-controls p:first-child').textContent = `Próximo Evento ${CONFIG.EVENT_FREQUENCY}: Desafios de Arquitetura Moderna.`;
-
     loadLeaderboard();
     loadChallenge(currentChallengeIndex);
-    galleryAread.style.display = 'none';
 }
 
 /**
@@ -287,59 +273,6 @@ function updateLeaderboard(reason, points) {
     
     loadLeaderboard(); // Recarrega e renderiza
 }
-
-// --- Funcionalidades Simuladas (Mock) ---
-
-/**
- * Mock de Eventos Mensais.
- */
-toggleEventBtn.addEventListener('click', () => {
-    const isEventActive = eventStatus.textContent.includes('Ativo');
-    if (isEventActive) {
-        eventStatus.textContent = "Status: Desativado";
-        eventStatus.style.color = 'red';
-    } else {
-        eventStatus.textContent = "Status: Ativo (Desafios de Arquitetura Moderna)";
-        eventStatus.style.color = 'green';
-        alert(`Evento ${CONFIG.EVENT_FREQUENCY} ativado! Desafios de Arquitetura Moderna estão em destaque.`);
-    }
-});
-
-/**
- * Mock de Criação de Equipe.
- */
-document.getElementById('create-team-btn').addEventListener('click', () => {
-    const teamName = prompt("Digite o nome da nova equipe:");
-    if (teamName) {
-        alert(`Equipe "${teamName}" criada com sucesso! (Mock)`);
-        // Em um sistema real, a pontuação seria somada à equipe.
-    }
-});
-
-/**
- * Mock de Submissão de Contribuição.
- */
-contributionForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const feedback = document.getElementById('contribution-feedback');
-    feedback.classList.remove('hidden');
-    // Simulação de salvamento em memória (apenas para demonstração)
-    const formData = new FormData(contributionForm);
-    const newChallenge = {
-        id: "mock-" + Date.now(),
-        title: formData.get('title'),
-        description: formData.get('description'),
-        difficulty: formData.get('difficulty'),
-        image_path: "mock_upload.jpg", // Simulação
-        submitter: "Usuário Local",
-        timestamp: new Date().toISOString(),
-        points: getBasePoints(formData.get('difficulty'))
-    };
-    console.log("Novo Desafio Submetido (Mock):", newChallenge);
-    // Não atualiza o JSON real, apenas simula o processo.
-    contributionForm.reset();
-    setTimeout(() => feedback.classList.add('hidden'), 5000);
-});
 
 // --- Inicialização ---
 loadChallenges();

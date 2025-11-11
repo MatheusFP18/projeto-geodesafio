@@ -185,49 +185,6 @@ button:hover {
     background-color: #f9f9f9;
 }
 
-/* Galeria */
-#challenge-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin-top: 15px;
-}
-
-.challenge-card {
-    border: 1px solid #ddd;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    text-align: center;
-    padding: 15px;
-    transition: transform 0.2s;
-}
-
-.challenge-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.challenge-card.completed {
-    border-left: 5px solid var(--secondary-color);
-}
-
-/* Formulário de Contribuição e Painel do Professor */
-#contribution-form, .panel-controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 15px;
-    align-items: center;
-}
-
-#contribution-form input[type="text"], #contribution-form select, #contribution-form input[type="file"] {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: var(--border-radius);
-    flex-grow: 1;
-    min-width: 200px;
-}
-
 /* Rodapé */
 footer {
     text-align: center;
@@ -249,15 +206,6 @@ footer {
 
     #leaderboard-area {
         grid-column: 2 / 3;
-        grid-row: 1 / 3; /* Ocupa duas linhas */
-    }
-
-    #gallery-area {
-        grid-column: 1 / 2;
-    }
-
-    #contribution-form-area, #teacher-panel-area {
-        grid-column: 1 / 3; /* Ocupa a largura total */
     }
 }
 
@@ -278,7 +226,3 @@ footer {
         max-width: 100%;
     }
 }
-
-/* #gallery-area{
-    background-color: #dc3545;
-} */
