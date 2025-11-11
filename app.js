@@ -199,6 +199,11 @@ guessForm.addEventListener('submit', async (event) => {
         viacepInfo.textContent = '';
         educationalText.textContent = '';
 
+        const initialBlur = 60;
+        const blurDecrement = 25;
+        const newBlur = Math.max(0, initialBlur - (attempts * blurDecrement));
+        challengeImage.style.filter = `blur(${newBlur}px)`;
+
         if (attempts >= MAX_ATTEMPTS) {
             document.getElementById('hint-area').classList.remove('hidden');
             // Penalidade por erro
