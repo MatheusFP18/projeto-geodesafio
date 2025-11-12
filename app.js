@@ -19,6 +19,8 @@ const citySelectionArea = document.getElementById('city-selection-area');
 const citySelect = document.getElementById('city-select'); 
 const gameArea = document.getElementById('game-area');
 const leaderboardArea = document.getElementById('leaderboard-area');
+const showHintBtn = document.getElementById('show-hint-btn');
+const hintText = document.getElementById('hint-text');
 
 // Estado do Jogo
 let challenges = [];
@@ -107,7 +109,8 @@ function loadChallenge(index) {
     // Configura o novo desafio
     challengeImage.src = CONFIG.IMAGES_FOLDER + currentChallenge.image_path;
     challengeImage.alt = currentChallenge.title;
-    challengeDescription.textContent = currentChallenge.description;
+    challengeDescription.textContent = `Dica: ${currentChallenge.description}`;
+    challengeDescription.style.display = 'none';
     
     // Aplica o desfoque inicial (controlado pelo CSS)
     challengeImage.style.filter = 'blur(10px)';
@@ -196,10 +199,14 @@ guessForm.addEventListener('submit', async (event) => {
         viacepInfo.textContent = '';
         educationalText.textContent = '';
 
-        const initialBlur = 60;
-        const blurDecrement = 25;
+        // Decrementa o blur a cada tentativa
+        const initialBlur = 30;
+        const blurDecrement = 10;
         const newBlur = Math.max(0, initialBlur - (attempts * blurDecrement));
         challengeImage.style.filter = `blur(${newBlur}px)`;
+
+        // Implementa opções após 2 tentativas e esconde o formulário descritivo
+
         if (attempts == 2) {
             alert("Dica: Verifique detalhes na descrição do desafio para ajudar na identificação.");
             document.getElementById('aria-multiselectable').classList.remove('hidden');
@@ -215,6 +222,19 @@ guessForm.addEventListener('submit', async (event) => {
         }
     }
     guessInput.value = '';
+});
+
+/**
+ * Botão para mostrar dica.
+ */
+showHintBtn.addEventListener('click', () => {
+    if (score >= 5) {
+        score -= 5;
+        challengeDescription.style.display = 'block';
+        updateLeaderboard("Dica", -5);
+    } else {
+        alert("Você não tem pontos suficientes para pedir uma dica.");
+    }
 });
 
 /**
