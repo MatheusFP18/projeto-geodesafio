@@ -209,10 +209,7 @@ guessForm.addEventListener('submit', async (event) => {
         challengeImage.style.filter = `blur(${newBlur}px)`;
 
         // Implementa opções após 2 tentativas e esconde o formulário descritivo
-        const initialBlur = 60;
-        const blurDecrement = 25;
-        const newBlur = Math.max(0, initialBlur - (attempts * blurDecrement));
-        challengeImage.style.filter = `blur(${newBlur}px)`;
+
         if (attempts == 2) {
             alert("Dica: Verifique detalhes na descrição do desafio para ajudar na identificação.");
             document.getElementById('aria-multiselectable').classList.remove('hidden');
