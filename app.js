@@ -247,7 +247,6 @@ guessForm.addEventListener('submit', async (event) => {
         // Implementa opções após 2 tentativas e esconde o formulário descritivo
 
         if (attempts == 2) {
-            alert("Dica: Verifique detalhes na descrição do desafio para ajudar na identificação.");
             document.getElementById('aria-multiselectable').classList.remove('hidden');
             document.getElementById('hint-area').classList.remove('hidden');
             document.getElementById('guess-input').style.display = 'none';
@@ -273,6 +272,10 @@ guessForm.addEventListener('submit', async (event) => {
 
         if (attempts >= MAX_ATTEMPTS) {
             document.getElementById('hint-area').classList.remove('hidden');
+            document.getElementById('palpitar').classList.add('hidden');
+
+
+
             // Penalidade por erro
             score = Math.max(0, score - 5); 
             updateLeaderboard("Penalidade", -5);
