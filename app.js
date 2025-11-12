@@ -30,7 +30,7 @@ let currentChallenge = null;
 let score = 0;
 let startTime = null;
 let attempts = 0;
-const MAX_ATTEMPTS = 2; 
+const MAX_ATTEMPTS = 3; 
 
 // --- Funções de Inicialização e Carregamento de Dados ---
 // --- Inicialização ---
