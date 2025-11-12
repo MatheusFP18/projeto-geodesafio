@@ -89,9 +89,16 @@ function loadChallenge(index) {
     // Reset UI
     guessForm.classList.remove('hidden');
     guessInput.value = '';
+    guessInput.style.display = 'block'; // Ensure text input is visible
     feedbackArea.classList.add('hidden');
     document.getElementById('hint-area').classList.add('hidden');
     challengeImage.parentElement.classList.remove('revealed');
+    
+    // Reset multiple-choice specific UI
+    const multiselectableArea = document.getElementById('aria-multiselectable');
+    multiselectableArea.classList.add('hidden'); // Hide multiple-choice area
+    const radioButtons = document.querySelectorAll('input[name="opcoes-radio"]');
+    radioButtons.forEach(radio => radio.checked = false); // Uncheck all radio buttons
     
     // Configura o novo desafio
     challengeImage.src = CONFIG.IMAGES_FOLDER + currentChallenge.image_path;
