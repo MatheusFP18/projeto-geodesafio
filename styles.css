@@ -132,6 +132,26 @@ button:hover {
     background-color: #7d4813;
 }
 
+#aria-multiselectable {
+    background-color: var(--background-color);
+    padding: 20px;
+    margin-top: 30px;
+    border-radius: var(--border-radius);
+
+    & legend {
+        font-weight: bold;
+    }
+
+    & div {
+        padding: 0px 10px;
+        text-align: left;
+    }
+
+    & div:last-child {
+        margin-bottom: 10px;
+    }
+}
+
 /* Área de Feedback */
 #feedback-area {
     padding: 15px;
