@@ -30,7 +30,8 @@ let currentChallenge = null;
 let score = 0;
 let startTime = null;
 let attempts = 0;
-const MAX_ATTEMPTS = 3; 
+const MAX_ATTEMPTS = 3;
+let currentAnswered = false; // <-- nova flag: true se o desafio já foi respondido corretamente 
 
 // --- Funções de Inicialização e Carregamento de Dados ---
 // --- Inicialização ---
@@ -118,7 +119,7 @@ function loadChallenge(index) {
         score = 0; // Opcional: resetar a pontuação
         return;
     }
-
+    currentAnswered = false; // reset da flag para novo desafio
     currentChallenge = challenges[index];
     attempts = 0;
     startTime = Date.now();
@@ -130,6 +131,13 @@ function loadChallenge(index) {
     feedbackArea.classList.add('hidden');
     document.getElementById('hint-area').classList.add('hidden');
     challengeImage.parentElement.classList.remove('revealed');
+
+    // Re-habilita e mostra o botão de "Palpitar"
+    const submitBtn = guessForm.querySelector('button[type="submit"]');
+    if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.style.display = ''; // limpa override inline display (volta ao estilo original)
+    }
     
     // Reset multiple-choice specific UI
     const multiselectableArea = document.getElementById('aria-multiselectable');
@@ -190,9 +198,13 @@ async function mockViaCEP(cep) {
  */
 guessForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+    // Impede múltiplos palpites após acerto
+    if (currentAnswered) return;
+
     let guess = guessInput.value.trim().toLowerCase();
     const correctTitle = currentChallenge.title.trim().toLowerCase();
     const timeElapsed = Math.floor((Date.now() - startTime) / 1000);
+    
 
     const multiselectableArea = document.getElementById('aria-multiselectable');
     if (!multiselectableArea.classList.contains('hidden')) {
@@ -206,7 +218,13 @@ guessForm.addEventListener('submit', async (event) => {
         const basePoints = currentChallenge.points || 10; // Usa os pontos do JSON ou um padrão
         const speedBonus = calculateSpeedBonus(timeElapsed);
         const totalPoints = basePoints + speedBonus;
-        
+        currentAnswered = true; // marca como respondido
+        const submitBtn = guessForm.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.style.display = 'none'; // esconde o botão "Palpitar"
+            }   
+
         score += totalPoints;
         
         // Revela a imagem
