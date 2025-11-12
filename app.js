@@ -203,6 +203,13 @@ guessForm.addEventListener('submit', async (event) => {
         const blurDecrement = 25;
         const newBlur = Math.max(0, initialBlur - (attempts * blurDecrement));
         challengeImage.style.filter = `blur(${newBlur}px)`;
+        if (attempts == 2) {
+            alert("Dica: Verifique detalhes na descrição do desafio para ajudar na identificação.");
+            document.getElementById('aria-multiselectable').classList.remove('hidden');
+            document.getElementById('hint-area').classList.remove('hidden');
+            //challengeDescription.textContent.style.display = 'block';
+            document.getElementById('guess-form').style.display = 'none';
+        }
 
         if (attempts >= MAX_ATTEMPTS) {
             document.getElementById('hint-area').classList.remove('hidden');
