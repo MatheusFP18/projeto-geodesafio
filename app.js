@@ -137,7 +137,7 @@ function loadChallenge(index) {
     challengeDescription.style.display = 'none';
     
     // Aplica o desfoque inicial (controlado pelo CSS)
-    challengeImage.style.filter = 'blur(10px)';
+    challengeImage.style.filter = 'blur(30px)';
 }
 
 // --- Lógica do Jogo ---
@@ -183,9 +183,16 @@ async function mockViaCEP(cep) {
  */
 guessForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const guess = guessInput.value.trim().toLowerCase();
+    let guess = guessInput.value.trim().toLowerCase();
     const correctTitle = currentChallenge.title.trim().toLowerCase();
     const timeElapsed = Math.floor((Date.now() - startTime) / 1000);
+
+    const multiselectableArea = document.getElementById('aria-multiselectable');
+    if (!multiselectableArea.classList.contains('hidden')) {
+        const inputSelected = document.querySelector('input[name="opcoes-radio"]:checked');
+        guess = inputSelected.value.trim().toLowerCase();
+        console.log(guess)
+    }
 
     if (guess === correctTitle) {
         // Acerto
@@ -222,6 +229,7 @@ guessForm.addEventListener('submit', async (event) => {
         feedbackArea.classList.add('incorrect');
         viacepInfo.textContent = '';
         educationalText.textContent = '';
+        guessInput.value = '';
 
         // Decrementa o blur a cada tentativa
         const initialBlur = 30;
@@ -235,7 +243,25 @@ guessForm.addEventListener('submit', async (event) => {
             alert("Dica: Verifique detalhes na descrição do desafio para ajudar na identificação.");
             document.getElementById('aria-multiselectable').classList.remove('hidden');
             document.getElementById('hint-area').classList.remove('hidden');
-            document.getElementById('guess-form').style.display = 'none';
+            document.getElementById('guess-input').style.display = 'none';
+            // 1. Array de IDs dos labels no HTML
+            const labelIDs = ['opcao1', 'opcao2', 'opcao3', 'opcao4'];
+            
+            // 2. Array de opções do JSON (corrigindo o nome da propriedade)
+            const opcoes = currentChallenge.multiple_choice_options;
+
+            // 3. Iterar e aplicar
+            labelIDs.forEach((id, index) => {
+                // Seleciona o label correto usando o atributo 'for'
+                const labelElement = document.querySelector(`label[for="${id}"]`);
+                const radioInput = document.getElementById(id); // Get the radio input element
+                
+                // Aplica o texto da opção correspondente
+                if (labelElement && radioInput) { // Ensure both exist
+                    labelElement.textContent = opcoes[index];
+                    radioInput.value = opcoes[index].toLowerCase(); // Set the value attribute
+                }
+            });
         }
 
         if (attempts >= MAX_ATTEMPTS) {
@@ -245,7 +271,7 @@ guessForm.addEventListener('submit', async (event) => {
             updateLeaderboard("Penalidade", -5);
         }
     }
-    guessInput.value = '';
+
 });
 
 /**

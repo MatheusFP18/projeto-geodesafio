@@ -43,27 +43,29 @@
                 </div>
                 <p id="challenge-description"></p>
                 
-                <form id="guess-form">
-                    <input type="text" id="guess-input" placeholder="Qual é este lugar?" required>
+                <form id="guess-form" style="display: block;">
+                    <input type="text" id="guess-input" placeholder="Qual é este lugar?" >
                     <button type="submit">Palpitar</button>
-                </form>
 
-                <div id="aria-multiselectable" class="hidden">
-                    <fieldset>
-                        <legend>  Selecione uma opção:  </legend>
+                    <div id="aria-multiselectable" class="hidden">
+                        <fieldset id="options">
+                            <legend>  Selecione uma opção:  </legend>
+                            <input type="radio" id="opcao1" name="opcoes-radio" value="opcao1">
+                            <label for="opcao1">Opção 1</label><br>
+                            <input type="radio" id="opcao2" name="opcoes-radio" value="opcao2">
+                            <label for="opcao2">Opção 2</label><br>
+                            <input type="radio" id="opcao3" name="opcoes-radio" value="opcao3">
+                            <label for="opcao3">Opção 3</label><br>
+                            <input type="radio" id="opcao4" name="opcoes-radio" value="opcao4">
+                            <label for="opcao4">Opção 4</label>
+                        </fieldset>
+                    </div>
 
-                        <input type="radio" id="opcao1" name="opcoes-radio" value="opcao1">
-                        <label for="opcao1">Opção 1</label><br>
-
-                        <input type="radio" id="opcao2" name="opcoes-radio" value="opcao2">
-                        <label for="opcao2">Opção 2</label><br>
-
-                        <input type="radio" id="opcao3" name="opcoes-radio" value="opcao3">
-                        <label for="opcao3">Opção 3</label><br>
-
-                        <input type="radio" id="opcao4" name="opcoes-radio" value="opcao4">
-                        <label for="opcao4">Opção 4</label>
-                    </fieldset>
+                </form>         
+                
+                <div id="hint-area" class="hidden">
+                    <p><span id="hint-text"></span></p>
+                    <button id="show-hint-btn">Mostrar Dica (-5 pontos)</button>
                 </div>
 
                 <div id="feedback-area" class="hidden">
@@ -74,10 +76,6 @@
                     <button id="next-challenge-btn">Próximo Desafio</button>
                 </div>
 
-                <div id="hint-area" class="hidden">
-                    <p>Dica: <span id="hint-text"></span></p>
-                    <button id="show-hint-btn">Mostrar Dica (-5 pontos)</button>
-                </div>
             </div>
         </section>
 

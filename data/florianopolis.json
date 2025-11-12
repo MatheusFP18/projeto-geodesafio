@@ -1,64 +1,8 @@
 [
   {
     "id": "desafio-001",
-    "title": "Marco Histórico Central",
-    "description": "Um dos edifícios mais antigos e emblemáticos da cidade.",
-    "difficulty": "Fácil",
-    "image_path": "marco_historico.jpeg",
-    "cep": "01001-000",
-    "lat": -23.5505,
-    "lng": -46.6333,
-    "submitter": "Professor Silva",
-    "timestamp": "2025-10-20T10:00:00Z",
-    "points": 10,
-    "educational_content": "Conteúdo educativo para Marco Histórico Central."
-  },
-  {
-    "id": "desafio-002",
-    "title": "Ponte Modernista",
-    "description": "Uma obra de arte da engenharia do século XX.",
-    "difficulty": "Médio",
-    "image_path": "ponte_modernista.jpeg",
-    "cep": "",
-    "lat": -23.5614,
-    "lng": -46.6569,
-    "submitter": "Aluno João",
-    "timestamp": "2025-10-21T11:30:00Z",
-    "points": 20,
-    "educational_content": "Conteúdo educativo para Ponte Modernista."
-  },
-  {
-    "id": "desafio-003",
-    "title": "Praça Escondida",
-    "description": "Um refúgio verde no meio da selva de pedra, conhecido por sua flora rara.",
-    "difficulty": "Difícil",
-    "image_path": "praca_escondida.jpeg",
-    "cep": "05407-000",
-    "lat": -23.5667,
-    "lng": -46.6828,
-    "submitter": "Colaborador Maria",
-    "timestamp": "2025-10-22T14:45:00Z",
-    "points": 40,
-    "educational_content": "Conteúdo educativo para Praça Escondida."
-  },
-  {
-    "id": "desafio-004",
-    "title": "Fchada Antiga",
-    "description": "Arte de rua que conta a história da imigração local.",
-    "difficulty": "Fácil",
-    "image_path": "fachada_antiga.jpeg",
-    "cep": "",
-    "lat": -23.5458,
-    "lng": -46.6413,
-    "submitter": "Professor Silva",
-    "timestamp": "2025-10-23T09:15:00Z",
-    "points": 10,
-    "educational_content": "Conteúdo educativo para Fachada Antiga."
-  },
-  {
-    "id": "desafio-005",
     "title": "Projeto Tamar",
-    "description": "Símbolo da modernidade e expansão da cidade.",
+    "description": "A escultura mostra uma tartaruga marinha saindo do ovo, símbolo de um projeto nacional de conservação. Esse projeto tem centros espalhados pelo Brasil, mas o mais famoso fica em uma praia baiana conhecida por suas águas quentes e recifes de coral.",
     "difficulty": "Médio",
     "image_path": "projeto_tamar.jpeg",
     "cep": "",
@@ -67,20 +11,72 @@
     "submitter": "Aluno Pedro",
     "timestamp": "2025-10-24T16:00:00Z",
     "points": 20,
-    "educational_content": "Conteúdo educativo para Projeto Tamar."
+    "educational_content": "O Projeto Tamar é uma iniciativa brasileira de conservação das tartarugas marinhas, criada oficialmente em 1980. Seu nome vem da junção de “Tartaruga Marinha” e tem como missão proteger espécies ameaçadas de extinção que desovam no litoral brasileiro. Um dos centros mais conhecidos está localizado na Praia do Forte, na Bahia, onde esculturas como a da imagem — representando o nascimento de uma tartaruga — são utilizadas para educação ambiental. O projeto atua em mais de 20 localidades ao longo da costa brasileira, monitorando praias, protegendo ninhos e promovendo ações de conscientização. Além disso, os centros de visitantes oferecem exposições interativas, tanques com animais resgatados, atividades educativas e lojas com produtos sustentáveis. O Tamar já ajudou a salvar milhões de filhotes de tartarugas e é reconhecido internacionalmente como modelo de conservação marinha. Uma curiosidade é que as tartarugas sempre voltam à mesma praia onde nasceram para desovar, um fenômeno chamado filopatria, que o projeto estuda e protege com rigor científico.",
+    "multiple_choice_options": [
+      "Aquário Oceânico",
+      "Projeto Tamar",
+      "Parque das Aves",
+      "Museu Oceanográfico"
+    ]
   },
   {
-    "id": "desafio-006",
-    "title": "Casarão Antigo",
-    "description": "Residência histórica com arquitetura colonial preservada.",
-    "difficulty": "Difícil",
-    "image_path": "casarao_antigo.jpeg",
-    "cep": "",
-    "lat": -23.5817,
-    "lng": -46.6189,
-    "submitter": "Colaborador Ana",
-    "timestamp": "2025-10-25T13:00:00Z",
-    "points": 40,
-    "educational_content": "Conteúdo educativo para Casarão Antigo."
+    "id": "desafio-002",
+    "title": "Catedral Metropolitana",
+    "description": "Localizada no coração de Florianópolis, essa construção é um dos marcos religiosos e arquitetônicos mais conhecidos da cidade, erguida sobre os alicerces de uma antiga igreja do século XVIII.",
+    "difficulty": "Fácil",
+    "image_path": "catedral_metropolitana.jpeg",
+    "cep": "88010-530",
+    "lat": -27.5975,
+    "lng": -48.5490,
+    "submitter": "Professor Silva",
+    "timestamp": "2025-11-12T09:00:00Z",
+    "points": 10,
+    "educational_content": "A Catedral Metropolitana de Florianópolis, também conhecida como Catedral de Nossa Senhora do Desterro, foi inaugurada em 1900 e está localizada em frente à Praça XV de Novembro. Sua fachada neoclássica e vitrais coloridos impressionam visitantes e fiéis. O templo foi erguido no mesmo local onde existia a capela construída por Francisco Dias Velho, fundador da cidade. O sino e o órgão centenário são considerados relíquias históricas. A catedral é hoje um importante símbolo da fé e da cultura da capital catarinense.",
+    "multiple_choice_options": [
+      "Catedral Metropolitana",
+      "Igreja Santinho",
+      "Capela Lagoa",
+      "Igreja Armação"
+    ]
+  },
+  {
+    "id": "desafio-003",
+    "title": "Ponte Hercílio Luz",
+    "description": "Símbolo maior de Florianópolis, essa ponte metálica é uma das mais antigas do Brasil e liga a ilha ao continente, sendo um marco da engenharia catarinense.",
+    "difficulty": "Médio",
+    "image_path": "ponte_hercilio_luz.jpeg",
+    "cep": "88085-100",
+    "lat": -27.5973,
+    "lng": -48.5588,
+    "submitter": "Aluno João",
+    "timestamp": "2025-11-12T09:10:00Z",
+    "points": 20,
+    "educational_content": "A Ponte Hercílio Luz foi inaugurada em 1926 e é a ponte pênsil mais longa do Brasil, com 821 metros de extensão. Batizada em homenagem ao governador Hercílio Luz, sua construção foi um marco para o desenvolvimento urbano e econômico de Florianópolis. Após décadas de uso e restauração, a ponte foi reaberta em 2019, tornando-se não apenas uma via de ligação, mas também um ponto turístico e patrimônio histórico nacional. Hoje, é um dos cartões-postais mais fotografados da cidade.",
+    "multiple_choice_options": [
+      "Ponte Hercílio Luz",
+      "Ponte Colombo Salles",
+      "Ponte Pedro Ivo",
+      "Ponte Beira-Mar"
+    ]
+  },
+  {
+    "id": "desafio-004",
+    "title": "Mercado Público",
+    "description": "Espaço tradicional no centro de Florianópolis onde se encontram produtos locais, gastronomia típica e apresentações culturais, representando a alma da cidade.",
+    "difficulty": "Fácil",
+    "image_path": "mercado_publico.jpeg",
+    "cep": "88010-400",
+    "lat": -27.5978,
+    "lng": -48.5495,
+    "submitter": "Colaborador Maria",
+    "timestamp": "2025-11-12T09:20:00Z",
+    "points": 10,
+    "educational_content": "O Mercado Público de Florianópolis foi inaugurado em 1899 e é um dos principais centros culturais e gastronômicos da cidade. Suas alas duplas abrigam peixarias, bares e lojas de artesanato. O local é ponto de encontro de moradores e turistas, especialmente para apreciar pratos típicos à base de frutos do mar. Tombado como patrimônio histórico municipal, o mercado preserva elementos da arquitetura colonial e é símbolo da vida cotidiana e das tradições ilhéus.",
+    "multiple_choice_options": [
+      "Mercado Público",
+      "Beira-Mar Norte",
+      "Praça XV",
+      "Largo Alfândega"
+    ]
   }
 ]
