@@ -1,10 +1,7 @@
-// Variáveis de Configuração (Substituídas pelas variáveis do template)
+
 const CONFIG = {
-    CITY: "Florianópolis",
     IMAGES_FOLDER: "assets/images/",
-    POINTS_EASY: 10,
-    POINTS_MEDIUM: 20,
-    POINTS_HARD: 40
+    CITY_CONFIG: {}
 };
 
 // Elementos do DOM
@@ -18,6 +15,11 @@ const educationalText = document.getElementById('educational-text');
 const viacepInfo = document.getElementById('viacep-info');
 const nextChallengeBtn = document.getElementById('next-challenge-btn');
 const leaderboardBody = document.querySelector('#leaderboard-table tbody');
+const citySelectionArea = document.getElementById('city-selection-area');
+const citySelect = document.getElementById('city-select'); 
+const startGameBtn = document.getElementById('start-game-btn');
+const gameArea = document.getElementById('game-area');
+const leaderboardArea = document.getElementById('leaderboard-area');
 const showHintBtn = document.getElementById('show-hint-btn');
 const hintText = document.getElementById('hint-text');
 
@@ -28,25 +30,52 @@ let currentChallenge = null;
 let score = 0;
 let startTime = null;
 let attempts = 0;
-const MAX_ATTEMPTS = 3; // Tentativas antes de mostrar dica
+const MAX_ATTEMPTS = 2; 
 
 // --- Funções de Inicialização e Carregamento de Dados ---
+// --- Inicialização ---
+
+citySelect.addEventListener('change', () => {
+    const selectedCityValue = citySelect.value;
+    if (!selectedCityValue) return;
+
+    const selectedCityName = citySelect.options[citySelect.selectedIndex].text;
+    CONFIG.CITY_CONFIG.city = selectedCityValue;
+    CONFIG.CITY_CONFIG.cityName = selectedCityName;
+
+    startGameBtn.classList.remove('hidden');
+    startGameBtn.disabled = true;
+
+    loadChallenges();
+});
+
+
+startGameBtn.addEventListener('click', () => {
+    // Esconde a seleção de cidade e mostra o jogo
+    citySelectionArea.classList.add('hidden');
+    gameArea.classList.remove('hidden');
+    leaderboardArea.classList.remove('hidden');
+    initializeGame();
+});
 
 /**
  * Carrega os dados dos desafios do arquivo JSON local.
  */
 async function loadChallenges() {
     try {
-        const response = await fetch('./data/images.json');
+        // Mostra um feedback de que os dados estão sendo carregados
+        // Usaremos um placeholder ou um elemento de status dedicado no futuro.
+        console.log(`Carregando desafios para ${CONFIG.CITY_CONFIG.cityName}...`);
+
+        const response = await fetch(`./data/${CONFIG.CITY_CONFIG.city}.json`);
         challenges = await response.json();
-        // Embaralha os desafios para começar
         challenges = shuffleArray(challenges);
-        console.log("Desafios carregados:", challenges);
-        // Inicializa o jogo
-        initializeGame();
+
+        // Habilita o botão para iniciar o jogo
+        startGameBtn.disabled = false;
     } catch (error) {
         console.error("Erro ao carregar desafios:", error);
-        challengeDescription.textContent = "Erro ao carregar os dados do jogo. Verifique o arquivo data/images.json.";
+        challengeDescription.textContent = `Erro ao carregar os dados do jogo para ${CONFIG.CITY_CONFIG.cityName}. Verifique o console e o arquivo de dados.`;
     }
 }
 
@@ -67,7 +96,7 @@ function shuffleArray(array) {
  * Inicia o jogo, carrega o primeiro desafio e a pontuação.
  */
 function initializeGame() {
-    document.querySelector('header p').textContent = `Descubra os lugares icônicos de ${CONFIG.CITY} e aprenda sobre sua história!`;
+    document.querySelector('header p').textContent = `Descubra os lugares icônicos de ${CONFIG.CITY_CONFIG.cityName} e aprenda sobre sua história!`;
     loadLeaderboard();
     loadChallenge(currentChallengeIndex);
 }
@@ -78,7 +107,15 @@ function initializeGame() {
  */
 function loadChallenge(index) {
     if (index >= challenges.length) {
-        alert("Parabéns! Você completou todos os desafios!");
+        alert(`Parabéns! Você completou todos os desafios de ${CONFIG.CITY_CONFIG.cityName}!`);
+        // Reseta a UI para a seleção de cidade
+        citySelectionArea.classList.remove('hidden');
+        gameArea.classList.add('hidden');
+        leaderboardArea.classList.add('hidden');
+        startGameBtn.classList.add('hidden');
+        citySelect.value = ""; // Limpa a seleção
+        currentChallengeIndex = 0; // Reseta o índice para um novo jogo
+        score = 0; // Opcional: resetar a pontuação
         return;
     }
 
@@ -104,20 +141,6 @@ function loadChallenge(index) {
 }
 
 // --- Lógica do Jogo ---
-
-/**
- * Calcula a pontuação baseada na dificuldade.
- * @param {string} difficulty A dificuldade do desafio.
- * @returns {number} A pontuação base.
- */
-function getBasePoints(difficulty) {
-    switch (difficulty) {
-        case 'Fácil': return CONFIG.POINTS_EASY;
-        case 'Médio': return CONFIG.POINTS_MEDIUM;
-        case 'Difícil': return CONFIG.POINTS_HARD;
-        default: return 0;
-    }
-}
 
 /**
  * Calcula o bônus de velocidade.
@@ -146,7 +169,7 @@ async function mockViaCEP(cep) {
         "cep": cep,
         "logradouro": "Rua Exemplo",
         "bairro": "Bairro Histórico",
-        "localidade": CONFIG.CITY,
+        "localidade": CONFIG.CITY_CONFIG.cityName,
         "uf": "SP"
     };
 
@@ -173,7 +196,7 @@ guessForm.addEventListener('submit', async (event) => {
 
     if (guess === correctTitle) {
         // Acerto
-        const basePoints = getBasePoints(currentChallenge.difficulty);
+        const basePoints = currentChallenge.points || 10; // Usa os pontos do JSON ou um padrão
         const speedBonus = calculateSpeedBonus(timeElapsed);
         const totalPoints = basePoints + speedBonus;
         
@@ -185,8 +208,7 @@ guessForm.addEventListener('submit', async (event) => {
 
         // Atualiza UI
         resultStatus.textContent = `Correto! (+${totalPoints} pontos)`;
-        feedbackArea.classList.remove('hidden');
-        feedbackArea.classList.remove('incorrect');
+        feedbackArea.classList.remove('hidden', 'incorrect');
         feedbackArea.classList.add('correct');
         guessForm.classList.add('hidden');
         
@@ -203,8 +225,7 @@ guessForm.addEventListener('submit', async (event) => {
         // Erro
         attempts++;
         resultStatus.textContent = `Incorreto. Tente novamente. Tentativas: ${attempts}/${MAX_ATTEMPTS}`;
-        feedbackArea.classList.remove('hidden');
-        feedbackArea.classList.remove('correct');
+        feedbackArea.classList.remove('hidden', 'correct');
         feedbackArea.classList.add('incorrect');
         viacepInfo.textContent = '';
         educationalText.textContent = '';
@@ -331,5 +352,3 @@ function updateLeaderboard(reason, points) {
     loadLeaderboard(); // Recarrega e renderiza
 }
 
-// --- Inicialização ---
-loadChallenges();

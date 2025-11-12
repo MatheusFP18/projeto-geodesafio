@@ -11,12 +11,29 @@
 
     <header>
         <h1>GeoDesafio: Onde Estou?</h1>
-        <p>Descubra os lugares icônicos de {city} e aprenda sobre sua história!</p>
+        <p>Descubra lugares icônicos e aprenda sobre sua história!</p>
     </header>
 
     <main>
+        <!-- Seção de Seleção de Cidade -->
+        <section id="city-selection-area">
+            <h2>Escolha uma cidade para jogar</h2>
+            <div id="city-selection-container">
+                <label for="city-select">Cidade: </label>
+                <select id="city-select" name="city">
+                    <option value="" disabled selected>Selecione...</option>
+                    <option value="florianopolis">Florianópolis</option> 
+                    <option value="biguacu">Biguaçu</option> 
+                    <option value="sao_jose">São José</option>
+                </select>
+                
+                <button id="start-game-btn" class="hidden" disabled>Iniciar Jogo</button>
+
+            </div>
+        </section>
+
         <!-- Seção Principal do Jogo -->
-        <section id="game-area">
+        <section id="game-area" class="hidden">
             <h2>Desafio Atual</h2>
             <div id="challenge-container">
                 <div id="image-container">
@@ -63,7 +80,7 @@
         </section>
 
         <!-- Tabela de Classificação Local (Gamificação) -->
-        <section id="leaderboard-area">
+        <section id="leaderboard-area" class="hidden">
             <h2>Tabela de Classificação</h2>
             <table id="leaderboard-table">
                 <thead>
