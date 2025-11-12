@@ -18,6 +18,8 @@ const educationalText = document.getElementById('educational-text');
 const viacepInfo = document.getElementById('viacep-info');
 const nextChallengeBtn = document.getElementById('next-challenge-btn');
 const leaderboardBody = document.querySelector('#leaderboard-table tbody');
+const showHintBtn = document.getElementById('show-hint-btn');
+const hintText = document.getElementById('hint-text');
 
 // Estado do Jogo
 let challenges = [];
@@ -94,7 +96,8 @@ function loadChallenge(index) {
     // Configura o novo desafio
     challengeImage.src = CONFIG.IMAGES_FOLDER + currentChallenge.image_path;
     challengeImage.alt = currentChallenge.title;
-    challengeDescription.textContent = currentChallenge.description;
+    challengeDescription.textContent = `Dica: ${currentChallenge.description}`;
+    challengeDescription.style.display = 'none';
     
     // Aplica o desfoque inicial (controlado pelo CSS)
     challengeImage.style.filter = 'blur(10px)';
@@ -199,11 +202,17 @@ guessForm.addEventListener('submit', async (event) => {
         viacepInfo.textContent = '';
         educationalText.textContent = '';
 
+        // Decrementa o blur a cada tentativa
+        const initialBlur = 30;
+        const blurDecrement = 10;
+        const newBlur = Math.max(0, initialBlur - (attempts * blurDecrement));
+        challengeImage.style.filter = `blur(${newBlur}px)`;
+
+        // Implementa opções após 2 tentativas e esconde o formulário descritivo
         if (attempts == 2) {
             alert("Dica: Verifique detalhes na descrição do desafio para ajudar na identificação.");
             document.getElementById('aria-multiselectable').classList.remove('hidden');
             document.getElementById('hint-area').classList.remove('hidden');
-            //challengeDescription.textContent.style.display = 'block';
             document.getElementById('guess-form').style.display = 'none';
         }
 
@@ -215,6 +224,19 @@ guessForm.addEventListener('submit', async (event) => {
         }
     }
     guessInput.value = '';
+});
+
+/**
+ * Botão para mostrar dica.
+ */
+showHintBtn.addEventListener('click', () => {
+    if (score >= 5) {
+        score -= 5;
+        challengeDescription.style.display = 'block';
+        updateLeaderboard("Dica", -5);
+    } else {
+        alert("Você não tem pontos suficientes para pedir uma dica.");
+    }
 });
 
 /**
