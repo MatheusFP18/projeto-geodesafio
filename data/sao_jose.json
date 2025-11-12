@@ -1,0 +1,16 @@
+[
+  {
+    "id": "saojose-001",
+    "title": "Centro Histórico de São José",
+    "description": "Conjunto de casarões coloniais que contam a história da cidade.",
+    "difficulty": "Médio",
+    "image_path": "sao_jose/centro_historico.jpeg",
+    "cep": "88103-000",
+    "lat": -27.6145,
+    "lng": -48.628,
+    "submitter": "Admin",
+    "timestamp": "2025-11-05T14:00:00Z",
+    "points": 20,
+    "educational_content": "O Centro Histórico de São José é um dos mais importantes conjuntos arquitetônicos de Santa Catarina, com construções do século XVIII."
+  }
+]

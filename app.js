@@ -1,10 +1,7 @@
-// Variáveis de Configuração (Substituídas pelas variáveis do template)
+
 const CONFIG = {
-    CITY: "Florianópolis",
     IMAGES_FOLDER: "assets/images/",
-    POINTS_EASY: 10,
-    POINTS_MEDIUM: 20,
-    POINTS_HARD: 40
+    CITY_CONFIG: {}
 };
 
 // Elementos do DOM
@@ -18,6 +15,10 @@ const educationalText = document.getElementById('educational-text');
 const viacepInfo = document.getElementById('viacep-info');
 const nextChallengeBtn = document.getElementById('next-challenge-btn');
 const leaderboardBody = document.querySelector('#leaderboard-table tbody');
+const citySelectionArea = document.getElementById('city-selection-area');
+const citySelect = document.getElementById('city-select'); 
+const gameArea = document.getElementById('game-area');
+const leaderboardArea = document.getElementById('leaderboard-area');
 
 // Estado do Jogo
 let challenges = [];
@@ -26,25 +27,37 @@ let currentChallenge = null;
 let score = 0;
 let startTime = null;
 let attempts = 0;
-const MAX_ATTEMPTS = 3; // Tentativas antes de mostrar dica
+const MAX_ATTEMPTS = 2; 
 
 // --- Funções de Inicialização e Carregamento de Dados ---
+
+function startGame() {
+    if (!currentChallenge) {
+        alert("Por favor, selecione uma cidade primeiro!");
+        return;
+    }
+    // Esconde a seleção de cidade e mostra o jogo
+    citySelectionArea.classList.add('hidden');
+    gameArea.classList.remove('hidden');
+    leaderboardArea.classList.remove('hidden');
+}
 
 /**
  * Carrega os dados dos desafios do arquivo JSON local.
  */
 async function loadChallenges() {
     try {
-        const response = await fetch('./data/images.json');
+        // Mostra um feedback de que os dados estão sendo carregados
+        challengeDescription.textContent = `Carregando desafios para ${CONFIG.CITY_CONFIG.cityName}...`;
+
+        const response = await fetch(`./data/${CONFIG.CITY_CONFIG.city}.json`);
         challenges = await response.json();
-        // Embaralha os desafios para começar
         challenges = shuffleArray(challenges);
-        console.log("Desafios carregados:", challenges);
-        // Inicializa o jogo
+
         initializeGame();
     } catch (error) {
         console.error("Erro ao carregar desafios:", error);
-        challengeDescription.textContent = "Erro ao carregar os dados do jogo. Verifique o arquivo data/images.json.";
+        challengeDescription.textContent = `Erro ao carregar os dados do jogo para ${CONFIG.CITY_CONFIG.cityName}. Verifique o console e o arquivo de dados.`;
     }
 }
 
@@ -65,7 +78,7 @@ function shuffleArray(array) {
  * Inicia o jogo, carrega o primeiro desafio e a pontuação.
  */
 function initializeGame() {
-    document.querySelector('header p').textContent = `Descubra os lugares icônicos de ${CONFIG.CITY} e aprenda sobre sua história!`;
+    document.querySelector('header p').textContent = `Descubra os lugares icônicos de ${CONFIG.CITY_CONFIG.cityName} e aprenda sobre sua história!`;
     loadLeaderboard();
     loadChallenge(currentChallengeIndex);
 }
@@ -103,20 +116,6 @@ function loadChallenge(index) {
 // --- Lógica do Jogo ---
 
 /**
- * Calcula a pontuação baseada na dificuldade.
- * @param {string} difficulty A dificuldade do desafio.
- * @returns {number} A pontuação base.
- */
-function getBasePoints(difficulty) {
-    switch (difficulty) {
-        case 'Fácil': return CONFIG.POINTS_EASY;
-        case 'Médio': return CONFIG.POINTS_MEDIUM;
-        case 'Difícil': return CONFIG.POINTS_HARD;
-        default: return 0;
-    }
-}
-
-/**
  * Calcula o bônus de velocidade.
  * @param {number} timeInSeconds O tempo gasto no desafio.
  * @returns {number} O bônus de pontuação.
@@ -143,7 +142,7 @@ async function mockViaCEP(cep) {
         "cep": cep,
         "logradouro": "Rua Exemplo",
         "bairro": "Bairro Histórico",
-        "localidade": CONFIG.CITY,
+        "localidade": CONFIG.CITY_CONFIG.cityName,
         "uf": "SP"
     };
 
@@ -163,7 +162,7 @@ guessForm.addEventListener('submit', async (event) => {
 
     if (guess === correctTitle) {
         // Acerto
-        const basePoints = getBasePoints(currentChallenge.difficulty);
+        const basePoints = currentChallenge.points || 10; // Usa os pontos do JSON ou um padrão
         const speedBonus = calculateSpeedBonus(timeElapsed);
         const totalPoints = basePoints + speedBonus;
         
@@ -175,8 +174,7 @@ guessForm.addEventListener('submit', async (event) => {
 
         // Atualiza UI
         resultStatus.textContent = `Correto! (+${totalPoints} pontos)`;
-        feedbackArea.classList.remove('hidden');
-        feedbackArea.classList.remove('incorrect');
+        feedbackArea.classList.remove('hidden', 'incorrect');
         feedbackArea.classList.add('correct');
         guessForm.classList.add('hidden');
         
@@ -193,8 +191,7 @@ guessForm.addEventListener('submit', async (event) => {
         // Erro
         attempts++;
         resultStatus.textContent = `Incorreto. Tente novamente. Tentativas: ${attempts}/${MAX_ATTEMPTS}`;
-        feedbackArea.classList.remove('hidden');
-        feedbackArea.classList.remove('correct');
+        feedbackArea.classList.remove('hidden', 'correct');
         feedbackArea.classList.add('incorrect');
         viacepInfo.textContent = '';
         educationalText.textContent = '';
@@ -207,7 +204,6 @@ guessForm.addEventListener('submit', async (event) => {
             alert("Dica: Verifique detalhes na descrição do desafio para ajudar na identificação.");
             document.getElementById('aria-multiselectable').classList.remove('hidden');
             document.getElementById('hint-area').classList.remove('hidden');
-            //challengeDescription.textContent.style.display = 'block';
             document.getElementById('guess-form').style.display = 'none';
         }
 
@@ -287,4 +283,16 @@ function updateLeaderboard(reason, points) {
 }
 
 // --- Inicialização ---
-loadChallenges();
+
+/**
+ * Manipula a seleção de uma cidade, carregando seus dados.
+ */
+citySelect.addEventListener('change', () => {
+    const selectedCityValue = citySelect.value;
+    if (!selectedCityValue) return;
+
+    const selectedCityName = citySelect.options[citySelect.selectedIndex].text;
+    CONFIG.CITY_CONFIG.city = selectedCityValue;
+    CONFIG.CITY_CONFIG.cityName = selectedCityName;
+    loadChallenges();
+});

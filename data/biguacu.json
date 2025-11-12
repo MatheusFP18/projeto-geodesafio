@@ -1,0 +1,16 @@
+[
+  {
+    "id": "biguacu-001",
+    "title": "Igreja Matriz de Biguaçu",
+    "description": "Um marco da fé e arquitetura no centro da cidade.",
+    "difficulty": "Fácil",
+    "image_path": "biguacu/igreja_matriz.jpeg",
+    "cep": "88160-000",
+    "lat": -27.4947,
+    "lng": -48.6543,
+    "submitter": "Admin",
+    "timestamp": "2025-11-01T10:00:00Z",
+    "points": 10,
+    "educational_content": "A Igreja Matriz São João Evangelista é um dos principais pontos turísticos e religiosos de Biguaçu."
+  }
+]
