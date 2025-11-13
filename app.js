@@ -309,8 +309,12 @@ guessForm.addEventListener('submit', async (event) => {
             showHintBtn.disabled = true;
             showHintBtn.style.display = 'none';
             document.getElementById('palpitar').classList.add('hidden');
+            
 
-
+            const answerCorrect =  document.createElement('h3')
+            answerCorrect.innerText = `Resposta correta: ${currentChallenge.title}`;
+            feedbackArea.prepend(answerCorrect);
+            feedbackArea.classList.add('incorrect');
 
             // Penalidade por erro
             score = Math.max(0, score - 5); 
