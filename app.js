@@ -31,7 +31,8 @@ let score = 0;
 let startTime = null;
 let attempts = 0;
 const MAX_ATTEMPTS = 3;
-let currentAnswered = false; // <-- nova flag: true se o desafio já foi respondido corretamente 
+let currentAnswered = false; // <-- nova flag: true se o desafio já foi respondido corretamente
+let hintUsed = false; // controle de uso da dica no desafio atual
 
 // --- Funções de Inicialização e Carregamento de Dados ---
 // --- Inicialização ---
@@ -107,6 +108,11 @@ function initializeGame() {
  * @param {number} index O índice do desafio no array `challenges`.
  */
 function loadChallenge(index) {
+        hintUsed = false; // reseta a flag
+    if (showHintBtn) {
+        showHintBtn.disabled = false;
+        showHintBtn.style.display = ''; // garante que reapareça no novo desafio
+}
     if (index >= challenges.length) {
         alert(`Parabéns! Você completou todos os desafios de ${CONFIG.CITY_CONFIG.cityName}!`);
         // Reseta a UI para a seleção de cidade
@@ -120,6 +126,7 @@ function loadChallenge(index) {
         return;
     }
     currentAnswered = false; // reset da flag para novo desafio
+    hintUsed = false; // reset de uso da dica
     currentChallenge = challenges[index];
     attempts = 0;
     startTime = Date.now();
@@ -137,6 +144,12 @@ function loadChallenge(index) {
     if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.style.display = ''; // limpa override inline display (volta ao estilo original)
+    }
+
+    // Re-habilita e mostra o botão de dica
+    if (showHintBtn) {
+        showHintBtn.disabled = false;
+        showHintBtn.style.display = ''; // garante que apareça novamente
     }
     
     // Reset multiple-choice specific UI
@@ -215,6 +228,8 @@ guessForm.addEventListener('submit', async (event) => {
 
     if (guess === correctTitle) {
         // Acerto
+        showHintBtn.disabled = true;
+        showHintBtn.style.display = 'none';
         const basePoints = currentChallenge.points || 10; // Usa os pontos do JSON ou um padrão
         const speedBonus = calculateSpeedBonus(timeElapsed);
         const totalPoints = basePoints + speedBonus;
@@ -291,6 +306,9 @@ guessForm.addEventListener('submit', async (event) => {
 
         if (attempts >= MAX_ATTEMPTS) {
             document.getElementById('hint-area').classList.remove('hidden');
+            // Ao esgotar as tentativas, remove o botão de dica
+            showHintBtn.disabled = true;
+            showHintBtn.style.display = 'none';
             // Penalidade por erro
             score = Math.max(0, score - 5); 
             updateLeaderboard("Penalidade", -5);
