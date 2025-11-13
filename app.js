@@ -135,6 +135,7 @@ function loadChallenge(index) {
     guessForm.classList.remove('hidden');
     guessInput.value = '';
     guessInput.style.display = 'block'; // Ensure text input is visible
+    nextChallengeBtn.classList.add('hidden'); // Esconde o botão de próximo desafio
     feedbackArea.classList.add('hidden');
     document.getElementById('hint-area').classList.add('hidden');
     challengeImage.parentElement.classList.remove('revealed');
@@ -144,6 +145,7 @@ function loadChallenge(index) {
     if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.style.display = ''; // limpa override inline display (volta ao estilo original)
+        submitBtn.classList.remove('hidden'); // Garante que o botão reapareça após erro
     }
 
     // Re-habilita e mostra o botão de dica
@@ -251,6 +253,7 @@ guessForm.addEventListener('submit', async (event) => {
         feedbackArea.classList.remove('hidden', 'incorrect');
         feedbackArea.classList.add('correct');
         guessForm.classList.add('hidden');
+        nextChallengeBtn.classList.remove('hidden'); // Mostra o botão de próximo desafio
         
         // Conteúdo Educativo
         educationalText.innerHTML = `<strong>${currentChallenge.title}</strong>: ${currentChallenge.educational_content}`;
@@ -309,12 +312,12 @@ guessForm.addEventListener('submit', async (event) => {
             showHintBtn.disabled = true;
             showHintBtn.style.display = 'none';
             document.getElementById('palpitar').classList.add('hidden');
+            nextChallengeBtn.classList.remove('hidden'); // Mostra o botão de próximo desafio
             
 
             const answerCorrect =  document.createElement('h3')
             answerCorrect.innerText = `Resposta correta: ${currentChallenge.title}`;
             feedbackArea.prepend(answerCorrect);
-            feedbackArea.classList.add('incorrect');
 
             // Penalidade por erro
             score = Math.max(0, score - 5); 
@@ -401,4 +404,3 @@ function updateLeaderboard(reason, points) {
     
     loadLeaderboard(); // Recarrega e renderiza
 }
-
