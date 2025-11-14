@@ -134,6 +134,10 @@ function loadChallenge(index) {
     // Reset UI
     guessForm.classList.remove('hidden');
     guessInput.value = '';
+    const previousCorrectAnswer = document.getElementById('correct-answer-display');
+    if (previousCorrectAnswer) {
+        previousCorrectAnswer.remove();
+    }
     guessInput.style.display = 'block'; // Ensure text input is visible
     nextChallengeBtn.classList.add('hidden'); // Esconde o botão de próximo desafio
     feedbackArea.classList.add('hidden');
@@ -316,7 +320,8 @@ guessForm.addEventListener('submit', async (event) => {
             
 
             const answerCorrect =  document.createElement('h3')
-            answerCorrect.innerText = `Resposta correta: ${currentChallenge.title}`;
+            answerCorrect.id = 'correct-answer-display';
+            answerCorrect.innerText = `A resposta correta era: ${currentChallenge.title}`;
             feedbackArea.prepend(answerCorrect);
 
             // Penalidade por erro
